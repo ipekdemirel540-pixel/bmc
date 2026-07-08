@@ -1,0 +1,70 @@
+<Page x:Class="ManufacturingToolsSuite.Pages.MakeBuyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{DynamicResource BackgroundBrush}">
+
+  <ScrollViewer Style="{StaticResource PageContentArea}">
+    <Grid Style="{StaticResource PageShell}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <Border Grid.Row="0" Style="{StaticResource PageHeaderBar}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="&#xE8A1;" Style="{StaticResource FlatModuleIcon}"
+                     Foreground="{StaticResource MakeBuyAccentBrush}"/>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Make / Buy Analizi" Style="{StaticResource ModulePageTitle}"/>
+            <TextBlock Text="Üretim veya satın alma karar destek sistemi" Style="{StaticResource ModulePageSubtitle}"/>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <UniformGrid Grid.Row="1" Columns="3" Margin="0,0,0,16">
+        <Border Style="{StaticResource CorporateCard}" Margin="0,0,8,0">
+          <StackPanel>
+            <Border Width="4" Height="20" Background="{StaticResource SuccessBrush}" CornerRadius="2" Margin="0,0,0,12"/>
+            <TextBlock Text="MAKE" FontFamily="{StaticResource PrimaryFont}" FontSize="15" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextBrush}" Margin="0,0,0,4"/>
+            <TextBlock Text="Kendi üretimimiz — kapasite ve maliyet analizi" Style="{StaticResource CaptionText}" TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+        <Border Style="{StaticResource CorporateCard}" Margin="4,0">
+          <StackPanel>
+            <Border Width="4" Height="20" Background="{StaticResource WarningBrush}" CornerRadius="2" Margin="0,0,0,12"/>
+            <TextBlock Text="BUY" FontFamily="{StaticResource PrimaryFont}" FontSize="15" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextBrush}" Margin="0,0,0,4"/>
+            <TextBlock Text="Tedarikçiden alım — fiyat ve teslimat analizi" Style="{StaticResource CaptionText}" TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+        <Border Style="{StaticResource CorporateCard}" Margin="8,0,0,0">
+          <StackPanel>
+            <Border Width="4" Height="20" Background="{StaticResource MakeBuyAccentBrush}" CornerRadius="2" Margin="0,0,0,12"/>
+            <TextBlock Text="ANALYSIS" FontFamily="{StaticResource PrimaryFont}" FontSize="15" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextBrush}" Margin="0,0,0,4"/>
+            <TextBlock Text="Maliyet ve kapasite karşılaştırması" Style="{StaticResource CaptionText}" TextWrapping="Wrap"/>
+          </StackPanel>
+        </Border>
+      </UniformGrid>
+
+      <Border Grid.Row="2" Style="{StaticResource CorporateCard}">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="480">
+          <TextBlock Text="&#xE8A1;" Style="{StaticResource EmptyStateIcon}" FontSize="56"
+                     Foreground="{StaticResource MakeBuyAccentBrush}" Opacity="0.35"/>
+          <TextBlock Text="Karar Analiz Modülü" FontFamily="{StaticResource PrimaryFont}" FontSize="18"
+                     FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"
+                     HorizontalAlignment="Center" Margin="0,16,0,8"/>
+          <TextBlock Text="Üretim veya satın alma kararlarınız için detaylı maliyet, kapasite ve risk analizi yapın."
+                     FontFamily="{StaticResource SecondaryFont}" FontSize="13"
+                     Foreground="{DynamicResource SecondaryTextBrush}" TextAlignment="Center" TextWrapping="Wrap"/>
+          <Button Style="{StaticResource PrimaryButton}" Background="{StaticResource MakeBuyAccentBrush}"
+                  Margin="0,24,0,0" Padding="24,12" HorizontalAlignment="Center">
+            <TextBlock Text="Yeni Analiz Başlat"/>
+          </Button>
+        </StackPanel>
+      </Border>
+    </Grid>
+  </ScrollViewer>
+</Page>

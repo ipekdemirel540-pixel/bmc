@@ -1,0 +1,25 @@
+# Build outputs
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Visual Studio / VS Code temp files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userossc
+*.userprefs
+*.docstates
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temp/Cache files
+_excelinspect_out/
+*.log

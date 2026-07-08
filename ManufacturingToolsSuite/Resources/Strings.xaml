@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <sys:String x:Key="App.Title">ManufacturingToolsSuite &#x2014; &#x00DC;retim Teknolojileri Ara&#x00E7;lar&#x0131;</sys:String>
+  <sys:String x:Key="MainTitle">&#x00DC;retim Teknolojileri Ara&#x00E7;lar&#x0131;</sys:String>
+  <sys:String x:Key="MainSubtitle">&#x0130;novasyonda M&#x00FC;kemmellik &#x2022; S&#x00FC;re&#x00E7; Optimizasyonu &#x2022; Dijital D&#x00F6;n&#x00FC;&#x015F;&#x00FC;m</sys:String>
+
+  <sys:String x:Key="TooltipMinimize">Simge durumuna k&#x00FC;&#x00E7;&#x00FC;lt</sys:String>
+  <sys:String x:Key="TooltipMaximize">B&#x00FC;y&#x00FC;t / Eski boyut</sys:String>
+  <sys:String x:Key="TooltipClose">Kapat</sys:String>
+  <sys:String x:Key="TooltipBack">Geri</sys:String>
+  <sys:String x:Key="TooltipHome">Ana Sayfa</sys:String>
+  <sys:String x:Key="TooltipContact">&#x0130;leti&#x015F;im</sys:String>
+  <sys:String x:Key="TooltipLanguage">Dil</sys:String>
+  <sys:String x:Key="TooltipTheme">Tema</sys:String>
+
+  <sys:String x:Key="ModuleSAP">SAP Analizi</sys:String>
+  <sys:String x:Key="ModuleNesting">Nesting</sys:String>
+  <sys:String x:Key="ModuleSTP">STEP/STP G&#x00F6;r&#x00FC;nt&#x00FC;leyici</sys:String>
+  <sys:String x:Key="ModuleIO">IO Analizi</sys:String>
+  <sys:String x:Key="ModuleMakeBuy">Make/Buy</sys:String>
+
+  <sys:String x:Key="Common.Open">A&#x00E7;</sys:String>
+  <sys:String x:Key="Common.Save">Kaydet</sys:String>
+  <sys:String x:Key="Common.Settings">Ayarlar</sys:String>
+</ResourceDictionary>

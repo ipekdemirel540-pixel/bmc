@@ -1,0 +1,376 @@
+<Window x:Class="ManufacturingToolsSuite.MainWindow"
+
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+
+        xmlns:commands="clr-namespace:ManufacturingToolsSuite.Commands"
+
+        xmlns:controls="clr-namespace:ManufacturingToolsSuite.Controls"
+
+        Name="mainWindow"
+
+        Title="Üretim Teknolojileri Asistan Araçları"
+
+        WindowStartupLocation="CenterScreen"
+
+        ResizeMode="CanResize"
+
+        WindowState="Normal"
+
+        Background="{DynamicResource BackgroundBrush}"
+
+        ShowInTaskbar="True"
+
+        WindowStyle="None"
+
+        MinWidth="1100"
+
+        MinHeight="700"
+
+        UseLayoutRounding="True"
+
+        SnapsToDevicePixels="True"
+
+        Loaded="Window_Loaded">
+
+  <shell:WindowChrome.WindowChrome>
+
+    <shell:WindowChrome CaptionHeight="0" CornerRadius="0" GlassFrameThickness="0" ResizeBorderThickness="6" UseAeroCaptionButtons="False"/>
+
+  </shell:WindowChrome.WindowChrome>
+
+
+
+  <Window.InputBindings>
+
+    <KeyBinding Command="{x:Static commands:AppCommands.Home}" Gesture="CTRL+0"/>
+
+    <KeyBinding Command="{x:Static commands:AppCommands.Back}" Key="Back"/>
+
+    <KeyBinding Command="{x:Static commands:AppCommands.BmcAi}" Gesture="CTRL+1"/>
+
+    <KeyBinding Command="{x:Static commands:AppCommands.SapExcel}" Gesture="CTRL+2"/>
+
+    <KeyBinding Command="{x:Static commands:AppCommands.Nesting}" Gesture="CTRL+3"/>
+
+    <KeyBinding Command="{x:Static commands:AppCommands.MakeBuy}" Gesture="CTRL+4"/>
+
+  </Window.InputBindings>
+
+
+
+  <Window.Resources>
+
+    <BooleanToVisibilityConverter x:Key="Bool2Vis"/>
+
+    <Style x:Key="DashboardModuleTileStyle" TargetType="controls:ModuleTile" BasedOn="{StaticResource ModuleTileV2Style}">
+      <Setter Property="MinHeight" Value="192"/>
+      <Setter Property="MinWidth" Value="192"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="Margin" Value="9"/>
+    </Style>
+
+  </Window.Resources>
+
+
+
+  <Border Background="{DynamicResource BackgroundBrush}"
+
+          BorderBrush="{DynamicResource BorderBrush}"
+
+          BorderThickness="1"
+
+          CornerRadius="10">
+
+    <Grid>
+
+      <Grid.RowDefinitions>
+
+        <RowDefinition Height="44"/>
+
+        <RowDefinition Height="44"/>
+
+        <RowDefinition Height="*" MinHeight="0"/>
+
+      </Grid.RowDefinitions>
+
+
+
+      <!-- Title bar -->
+
+      <Border Grid.Row="0" Style="{StaticResource ShellHeader}" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+
+        <Grid>
+
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+            <Image Style="{StaticResource TitleBarBrandLogoStyle}" Margin="0,0,10,0"/>
+
+            <TextBlock Style="{StaticResource TitleBarAppNameStyle}"
+                       Text="{StaticResource MainTitle}"/>
+
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <ToggleButton x:Name="ThemeToggleButton"
+                          Style="{StaticResource ThemeToggleStyle}"
+                          Checked="ThemeToggleButton_Checked"
+                          Unchecked="ThemeToggleButton_Unchecked"
+                          shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                          Margin="0,0,2,0"/>
+            <Button Style="{StaticResource HeaderIconButtonStyle}" Click="OpenContactPage" ToolTip="İletişim"
+                    shell:WindowChrome.IsHitTestVisibleInChrome="True">
+              <TextBlock Text="&#xE8F2;" FontFamily="{StaticResource IconFont}" FontSize="11"
+                         Foreground="{DynamicResource SecondaryTextBrush}"/>
+            </Button>
+            <Border Width="1" Height="16" Background="{DynamicResource BorderBrush}" Margin="6,0,2,0"/>
+            <Button Style="{StaticResource TitleBarButtonStyle}" Click="BtnMinimize_Click" ToolTip="Küçült"
+                    shell:WindowChrome.IsHitTestVisibleInChrome="True">
+              <TextBlock Text="&#xE921;" Style="{StaticResource TitleBarGlyphStyle}"
+                         Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            </Button>
+            <Button Style="{StaticResource TitleBarButtonStyle}" Click="BtnMaximize_Click" ToolTip="Tam Ekran"
+                    shell:WindowChrome.IsHitTestVisibleInChrome="True">
+              <TextBlock x:Name="MaximizeGlyph" Text="&#xE922;" Style="{StaticResource TitleBarGlyphStyle}"
+                         Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            </Button>
+            <Button Style="{StaticResource TitleBarCloseButtonStyle}" Click="BtnClose_Click" ToolTip="Kapat"
+                    shell:WindowChrome.IsHitTestVisibleInChrome="True">
+              <TextBlock Text="&#xE8BB;" Style="{StaticResource TitleBarGlyphStyle}"
+                         Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            </Button>
+          </StackPanel>
+
+        </Grid>
+
+      </Border>
+
+
+
+      <!-- Top command bar -->
+
+      <Border Grid.Row="1" Style="{StaticResource TopNavBar}">
+
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+
+          <StackPanel Orientation="Horizontal" Margin="8,0">
+            <Button x:Name="navHome" Content="Ana Sayfa" Style="{StaticResource TopNavPillButton}"
+                    Command="{x:Static commands:AppCommands.Home}" CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Tag="Active"/>
+            <Button x:Name="navSap" Content="SAP" Style="{StaticResource TopNavPillButton}"
+                    Command="{x:Static commands:AppCommands.SapExcel}" CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Button x:Name="navNesting" Content="Nesting" Style="{StaticResource TopNavPillButton}"
+                    Command="{x:Static commands:AppCommands.Nesting}" CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Button x:Name="navMakeBuy" Content="Make/Buy" Style="{StaticResource TopNavPillButton}"
+                    Command="{x:Static commands:AppCommands.MakeBuy}" CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Button x:Name="navBmcAi" Content="BMC AI" Style="{StaticResource TopNavPillButton}"
+                    Command="{x:Static commands:AppCommands.BmcAi}" CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+          </StackPanel>
+
+        </ScrollViewer>
+
+      </Border>
+
+
+
+      <!-- Content -->
+
+      <Grid Grid.Row="2" Background="{DynamicResource BackgroundBrush}"
+            Margin="0,0,0,16" MinHeight="0">
+
+        <Image Style="{StaticResource CorporateWatermarkImageStyle}" Panel.ZIndex="0"/>
+
+        <Frame x:Name="MainFrame" Background="Transparent" Panel.ZIndex="1"
+               NavigationUIVisibility="Hidden" ClipToBounds="False"
+               VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+               MinHeight="0"/>
+
+        <!-- Dashboard landing -->
+
+        <ScrollViewer x:Name="DashboardPanel"
+                      Style="{StaticResource PageContentArea}"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Visibility="{Binding IsDashboardVisible, Converter={StaticResource Bool2Vis}}"
+                      Panel.ZIndex="2">
+
+          <!-- Full-width dashboard: no MaxWidth centering; modest padding only.
+               MinHeight=ViewportHeight so * rows fill the window inside ScrollViewer. -->
+          <Grid Margin="24,16,24,24"
+                HorizontalAlignment="Stretch"
+                MinHeight="{Binding ViewportHeight, ElementName=DashboardPanel}">
+
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="2*"/>
+              <ColumnDefinition Width="20"/>
+              <ColumnDefinition Width="*" MinWidth="260"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*" MinHeight="420"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Headers share row 0 → same baseline -->
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="Modüller" Style="{StaticResource DashboardSectionHeader}"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="2"
+                       Text="Hızlı Erişim" Style="{StaticResource DashboardSectionHeader}"/>
+
+            <!-- Modules 2x2 — stretches with shared content row -->
+            <UniformGrid Grid.Row="1" Grid.Column="0" Rows="2" Columns="2"
+                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+              <controls:ModuleTile Style="{StaticResource DashboardModuleTileStyle}"
+                                   Title="SAP Analizi" Description="Excel veri işleme ve BOM analizi"
+                                   IconGlyph="&#xE9F9;" GradientKey="SAPGradient"
+                                   Command="{x:Static commands:AppCommands.SapExcel}"
+                                   CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+              <controls:ModuleTile Style="{StaticResource DashboardModuleTileStyle}"
+                                   Title="Nesting" Description="Profil kesim planı ve fire optimizasyonu"
+                                   IconGlyph="&#xE7C3;" GradientKey="NestingGradient"
+                                   Command="{x:Static commands:AppCommands.Nesting}"
+                                   CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+              <controls:ModuleTile Style="{StaticResource DashboardModuleTileStyle}"
+                                   Title="Make/Buy" Description="Üretim veya satın alma karar desteği"
+                                   IconGlyph="&#xE7BF;" GradientKey="MakeBuyGradient"
+                                   Command="{x:Static commands:AppCommands.MakeBuy}"
+                                   CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+              <controls:ModuleTile Style="{StaticResource DashboardModuleTileStyle}"
+                                   Title="BMC AI" Description="Yapay zeka destekli üretim danışmanı"
+                                   IconGlyph="&#xE99A;" GradientKey="BMCAIGradient"
+                                   Command="{x:Static commands:AppCommands.BmcAi}"
+                                   CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+            </UniformGrid>
+
+            <!-- Sidebar 2 equal rows — bottom aligns with module grid -->
+            <Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+              </Grid.RowDefinitions>
+
+              <Border x:Name="panelRecentActivity" Grid.Row="0" Style="{StaticResource CorporateCard}"
+                      Margin="0,9,0,9" Padding="16"
+                      VerticalAlignment="Stretch" MinHeight="192">
+
+                <StackPanel VerticalAlignment="Top">
+
+                  <TextBlock Text="Son İşlemler" FontFamily="{StaticResource SecondaryFont}" FontSize="11"
+                             FontWeight="SemiBold" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,0,0,10"/>
+
+                  <Button x:Name="btnResumeModule" Style="{StaticResource SecondaryButton}"
+                          HorizontalAlignment="Stretch" Padding="14,10" Click="BtnResumeModule_Click"
+                          Visibility="Collapsed" Margin="0,0,0,8">
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock Text="&#xE7C3;" FontFamily="{StaticResource IconFont}" FontSize="13"
+                                 Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                      <TextBlock x:Name="txtResumeModule" FontFamily="{StaticResource SecondaryFont}" FontSize="12"
+                                 FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"
+                                 VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                  </Button>
+
+                  <Button x:Name="btnOpenLastNesting" Style="{StaticResource SecondaryButton}"
+                          HorizontalAlignment="Stretch" Padding="14,10" Click="BtnOpenLastNesting_Click"
+                          Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock Text="&#xE9F5;" FontFamily="{StaticResource IconFont}" FontSize="13"
+                                 Foreground="{StaticResource NestingAccentBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                      <TextBlock x:Name="txtOpenLastNesting" FontFamily="{StaticResource SecondaryFont}" FontSize="12"
+                                 FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"
+                                 VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                  </Button>
+
+                  <TextBlock x:Name="txtNoRecentActivity" Text="Henüz kayıtlı son işlem yok."
+                             FontFamily="{StaticResource SecondaryFont}" FontSize="12"
+                             Foreground="{DynamicResource SecondaryTextBrush}" TextWrapping="Wrap"
+                             Visibility="Visible"/>
+
+                </StackPanel>
+
+              </Border>
+
+              <Border x:Name="panelNestingSummary" Grid.Row="1" Style="{StaticResource CorporateCard}"
+                      Margin="0,9,0,9" Padding="16"
+                      VerticalAlignment="Stretch" MinHeight="192" Visibility="Collapsed">
+
+                <StackPanel VerticalAlignment="Top">
+
+                  <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                    <TextBlock Text="&#xE7C3;" FontFamily="{StaticResource IconFont}" FontSize="16"
+                               Foreground="{StaticResource NestingAccentBrush}" Margin="0,0,8,0"/>
+                    <TextBlock Text="Nesting Özeti" FontFamily="{StaticResource PrimaryFont}"
+                               FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                  </StackPanel>
+
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                      <TextBlock Text="Dosya" Style="{StaticResource MetricCardLabel}"/>
+                      <TextBlock x:Name="txtNestingSummaryFile" Text="—" FontFamily="{StaticResource SecondaryFont}"
+                                 FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"
+                                 TextTrimming="CharacterEllipsis" Margin="0,4,0,0"
+                                 ToolTip="{Binding Text, ElementName=txtNestingSummaryFile}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                      <TextBlock Text="Verimlilik" Style="{StaticResource MetricCardLabel}"/>
+                      <TextBlock x:Name="txtNestingSummaryEfficiency" Text="—" FontFamily="{StaticResource PrimaryFont}"
+                                 FontSize="16" FontWeight="Bold" Foreground="{StaticResource NestingAccentBrush}"
+                                 Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                  </Grid>
+
+                  <Button Style="{StaticResource NestingCompactLinkButton}"
+                          Margin="0,12,0,0"
+                          Click="BtnOpenLastNesting_Click">
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock Text="Nesting'e Git" FontFamily="{StaticResource SecondaryFont}"
+                                 FontSize="12.5" FontWeight="SemiBold"/>
+                      <TextBlock Text="&#xE72A;" FontFamily="{StaticResource IconFont}" FontSize="11"
+                                 Margin="6,1,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                  </Button>
+
+                </StackPanel>
+
+              </Border>
+
+            </Grid>
+
+            <!-- Shortcuts flush with modules left edge -->
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Margin="9,8,0,0"
+                       Text="Kısayollar: Ctrl+1 BMC AI · Ctrl+2 SAP · Ctrl+3 Nesting · Ctrl+4 Make/Buy"
+                       FontFamily="{StaticResource SecondaryFont}" FontSize="11"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       HorizontalAlignment="Left"/>
+
+          </Grid>
+
+        </ScrollViewer>
+
+      </Grid>
+
+    </Grid>
+
+  </Border>
+
+</Window>
+

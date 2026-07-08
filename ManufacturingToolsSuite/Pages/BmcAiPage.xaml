@@ -1,0 +1,131 @@
+<Page x:Class="ManufacturingToolsSuite.Pages.BmcAiPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{DynamicResource BackgroundBrush}">
+
+  <Grid Style="{StaticResource PageShell}" MinHeight="0">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*" MinHeight="0"/>
+    </Grid.RowDefinitions>
+
+    <!-- Page header -->
+    <Border Grid.Row="0" Style="{StaticResource PageHeaderBar}">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="&#xE95A;" Style="{StaticResource FlatModuleIcon}"
+                     Foreground="{StaticResource BMCAIAccentBrush}"/>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="BMC AI Asistan" Style="{StaticResource ModulePageTitle}"/>
+            <TextBlock Text="Yapay zeka destekli üretim danışmanı" Style="{StaticResource ModulePageSubtitle}"/>
+          </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+          <Border Style="{StaticResource FeaturePill}" Background="{StaticResource InfoMutedBrush}" BorderBrush="#BFDBFE">
+            <TextBlock Text="Akıllı Analiz" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BMCAIAccentBrush}"/>
+          </Border>
+          <Border Style="{StaticResource FeaturePill}" Background="{StaticResource AccentMutedBrush}" BorderBrush="#BFDBFE">
+            <TextBlock Text="7/24" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource InfoBrush}"/>
+          </Border>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Content -->
+    <Grid Grid.Row="1" MinHeight="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="16"/>
+        <ColumnDefinition Width="300"/>
+      </Grid.ColumnDefinitions>
+
+      <!-- Chat area -->
+      <Grid Grid.Column="0" MinHeight="0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" MinHeight="0"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Style="{StaticResource CorporateCard}" Margin="0,0,0,16" Padding="0">
+          <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24,24,24,16" CanContentScroll="False">
+            <StackPanel>
+              <Border Background="{StaticResource InfoMutedBrush}" BorderBrush="#BFDBFE" BorderThickness="1"
+                      CornerRadius="12" Padding="16" Margin="0,0,0,16">
+                <StackPanel>
+                  <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <TextBlock Text="&#xE95A;" FontFamily="{StaticResource IconFont}" FontSize="14"
+                               Foreground="{StaticResource BMCAIAccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="BMC AI'ye Hoş Geldiniz"
+                               FontFamily="{StaticResource PrimaryFont}" FontSize="14" FontWeight="SemiBold"
+                               Foreground="{StaticResource BMCAIAccentBrush}"/>
+                  </StackPanel>
+                  <TextBlock Text="Üretim süreçleri, optimizasyon veya teknik sorularınız için buradayım."
+                             Foreground="{DynamicResource SecondaryTextBrush}" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+              </Border>
+              <TextBlock x:Name="OutputText" TextWrapping="Wrap" Foreground="{DynamicResource TextBrush}"
+                         FontFamily="{StaticResource SecondaryFont}" FontSize="13" LineHeight="22"/>
+            </StackPanel>
+          </ScrollViewer>
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource CorporateCard}" Padding="16">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="PromptBox" Style="{StaticResource InputField}"
+                     AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                     MinHeight="72" MaxHeight="140" TextWrapping="Wrap" Margin="0,0,0,12"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+              <Button Content="Temizle" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+              <Button Style="{StaticResource PrimaryButton}" Background="{StaticResource BMCAIAccentBrush}"
+                      Click="SendButton_Click" Padding="20,10">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="&#xE724;" FontFamily="{StaticResource IconFont}" FontSize="12" Margin="0,0,8,0"/>
+                  <TextBlock Text="Gönder"/>
+                </StackPanel>
+              </Button>
+            </StackPanel>
+          </Grid>
+        </Border>
+      </Grid>
+
+      <!-- Sidebar -->
+      <Border Grid.Column="2" Style="{StaticResource CorporateCard}" Padding="20" MinHeight="0">
+        <Grid MinHeight="0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" MinHeight="0"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+
+          <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Geçmiş" Style="{StaticResource SectionHeader}" Margin="0,0,0,4"/>
+            <TextBlock Text="Önceki sorgu ve yanıtlarınız" Style="{StaticResource CaptionText}"/>
+          </StackPanel>
+
+          <Border Grid.Row="1" Background="{DynamicResource HoverSurfaceBrush}"
+                  BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                  CornerRadius="10" Margin="0,0,0,16">
+            <ListBox x:Name="HistoryList" Style="{StaticResource CorporateListBox}"
+                     SelectionChanged="HistoryList_SelectionChanged"/>
+          </Border>
+
+          <Border Grid.Row="2" Background="{StaticResource InfoMutedBrush}" BorderBrush="#BFDBFE"
+                  BorderThickness="1" CornerRadius="10" Padding="12">
+            <StackPanel>
+              <TextBlock Text="İstatistikler" Style="{StaticResource SectionHeader}" FontSize="12" Margin="0,0,0,6"/>
+              <TextBlock x:Name="SummaryText" TextWrapping="Wrap" Style="{StaticResource CaptionText}"/>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</Page>

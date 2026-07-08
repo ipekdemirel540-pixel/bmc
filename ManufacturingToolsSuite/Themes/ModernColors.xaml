@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <SolidColorBrush x:Key="Modern.Background" Color="#F8FAFC"/>
+  <SolidColorBrush x:Key="Modern.Surface" Color="#FFFFFF"/>
+  <SolidColorBrush x:Key="Modern.Card" Color="#FFFFFF"/>
+  <SolidColorBrush x:Key="Modern.Border" Color="#E2E8F0"/>
+  <SolidColorBrush x:Key="Modern.Text" Color="#1E293B"/>
+  <SolidColorBrush x:Key="Modern.TextSecondary" Color="#64748B"/>
+  <SolidColorBrush x:Key="Modern.Accent" Color="#2563EB"/>
+</ResourceDictionary>

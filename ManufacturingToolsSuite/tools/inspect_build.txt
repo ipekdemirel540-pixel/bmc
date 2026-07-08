@@ -1,0 +1,12 @@
+﻿  Geri y├╝klenecek projeler belirleniyor...
+C:\Users\KLAUS\Documents\Repos\├£retim Teknolojileri Ara├ğlar─▒\ManufacturingToolsSuite\tools\ExcelInspect\ExcelInspect.csproj : error NU1201: ManufacturingToolsSuite projesi net10.0 (.NETCoreApp,Version=v10.0) ile uyumlu de─şil. ManufacturingToolsSuite projesi ┼şunlar─▒ destekler: net10.0-windows7.0 (.NETCoreApp,Version=v10.0)
+  C:\Users\KLAUS\Documents\Repos\├£retim Teknolojileri Ara├ğlar─▒\ManufacturingToolsSuite\tools\ExcelInspect\ExcelInspect.csproj geri y├╝klenemedi (200 ms i├ğinde).
+  Geri y├╝kleme i├ğin 2 proje i├ğinden 1 tanesi g├╝ncel.
+
+Olu┼şturma BA┼ŞARISIZ OLDU.
+
+C:\Users\KLAUS\Documents\Repos\├£retim Teknolojileri Ara├ğlar─▒\ManufacturingToolsSuite\tools\ExcelInspect\ExcelInspect.csproj : error NU1201: ManufacturingToolsSuite projesi net10.0 (.NETCoreApp,Version=v10.0) ile uyumlu de─şil. ManufacturingToolsSuite projesi ┼şunlar─▒ destekler: net10.0-windows7.0 (.NETCoreApp,Version=v10.0)
+    0 Uyar─▒
+    1 Hata
+
+Ge├ğen S├╝re 00:00:01.10

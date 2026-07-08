@@ -1,0 +1,7 @@
+﻿OK: 867 rows, format=HeaderBasedFlexible
+  5308P84000 | 40X80X4,0 | 13860mm | qty=1 | SA─Ş/SOL
+  5308P84021 | 40X80X4,0 | 13860mm | qty=1 | SA─Ş/SOL
+  5308P86035 | 30X40X1,5 | 8330mm | qty=1 | PODEST
+  5308P84012 | 40X50X2,0 | 8130mm | qty=1 | SA─Ş/SOL
+  5308P84053 | 40X40X2,0 | 7300mm | qty=1 | PODEST
+  Dimensions groups: 18

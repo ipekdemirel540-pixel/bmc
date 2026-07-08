@@ -1,0 +1,9 @@
+﻿  Geri y├╝klenecek projeler belirleniyor...
+  Geri y├╝kleme i├ğin t├╝m projeler g├╝ncel.
+  ManufacturingToolsSuite -> C:\Users\KLAUS\Documents\Repos\├£retim Teknolojileri Ara├ğlar─▒\ManufacturingToolsSuite\bin\Debug\net10.0-windows\ManufacturingToolsSuite.dll
+
+Olu┼şturma ba┼şar─▒l─▒ oldu.
+    0 Uyar─▒
+    0 Hata
+
+Ge├ğen S├╝re 00:00:03.40

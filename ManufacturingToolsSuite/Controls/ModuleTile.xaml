@@ -1,0 +1,76 @@
+<UserControl x:Class="ManufacturingToolsSuite.Controls.ModuleTile"
+
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+             xmlns:local="clr-namespace:ManufacturingToolsSuite.Controls">
+
+  <Button Style="{StaticResource ModuleTileCardButtonStyle}"
+          Command="{Binding Command, RelativeSource={RelativeSource AncestorType=local:ModuleTile}}"
+          CommandTarget="{Binding CommandTarget, RelativeSource={RelativeSource AncestorType=local:ModuleTile}}"
+          HorizontalContentAlignment="Center"
+          VerticalContentAlignment="Center">
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+      <TextBlock x:Name="IconBlock"
+
+                 Text="{Binding IconGlyph, RelativeSource={RelativeSource AncestorType=local:ModuleTile}}"
+
+                 FontFamily="{StaticResource IconFont}"
+
+                 FontSize="48"
+
+                 Foreground="{Binding IconBrush, RelativeSource={RelativeSource AncestorType=local:ModuleTile}}"
+
+                 HorizontalAlignment="Center"
+
+                 TextAlignment="Center"
+
+                 Margin="0,0,0,18"/>
+
+
+
+      <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:ModuleTile}}"
+
+                 Foreground="{DynamicResource TextBrush}"
+
+                 FontFamily="{StaticResource PrimaryFont}"
+
+                 FontSize="15"
+
+                 FontWeight="SemiBold"
+
+                 TextWrapping="Wrap"
+
+                 TextAlignment="Center"
+
+                 HorizontalAlignment="Center"
+
+                 Margin="0,0,0,6"/>
+
+
+
+      <TextBlock Text="{Binding Description, RelativeSource={RelativeSource AncestorType=local:ModuleTile}}"
+
+                 Foreground="{DynamicResource SecondaryTextBrush}"
+
+                 FontFamily="{StaticResource SecondaryFont}"
+
+                 FontSize="12.5"
+
+                 TextWrapping="Wrap"
+
+                 TextAlignment="Center"
+
+                 HorizontalAlignment="Center"
+
+                 LineHeight="19"/>
+
+    </StackPanel>
+
+  </Button>
+
+</UserControl>
+
