@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using System.ComponentModel;
 
@@ -325,23 +325,30 @@ namespace ManufacturingToolsSuite
 
 
         private void MainFrame_Navigated(object? sender, NavigationEventArgs e)
-
         {
-
             if (FindName("MainFrame") is Frame frame)
-
             {
-
                 if (frame.Content == null)
-
+                {
                     SetDashboard();
-
+                }
                 else
-
+                {
                     IsDashboardVisible = false;
 
+                    // Automatically update top nav selection based on navigated page type
+                    if (frame.Content is Pages.NestingPage)
+                        SetModule("Nesting");
+                    else if (frame.Content is Pages.ExcelProcessorPage)
+                        SetModule("SAP Analizi");
+                    else if (frame.Content is Pages.MakeBuyPage)
+                        SetModule("Make/Buy");
+                    else if (frame.Content is Pages.BmcAiPage)
+                        SetModule("BMC AI");
+                    else if (frame.Content is Pages.StepViewerPage)
+                        SetModule("STEP/STP Görüntüleyici");
+                }
             }
-
         }
 
 
