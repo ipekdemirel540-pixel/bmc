@@ -178,7 +178,7 @@
               <DataGridTextColumn Header="Kesimler" Binding="{Binding CutLengths}" Width="120"/>
               <DataGridTextColumn Header="Kullanım" Binding="{Binding UsedMm, StringFormat={}{0:N0}}" Width="72"/>
               <DataGridTextColumn Header="Fire" Binding="{Binding WasteMm, StringFormat={}{0:N0}}" Width="64"/>
-              <DataGridTextColumn Header="%" Binding="{Binding UtilizationPercent, StringFormat={}{0:0.#}}" Width="48"/>
+              <DataGridTextColumn Header="%" Binding="{Binding UtilizationPercent, StringFormat={}{0:0.#}}" Width="65"/>
             </DataGrid.Columns>
           </DataGrid>
           <StackPanel x:Name="pnlEmptyState" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
