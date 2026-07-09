@@ -92,10 +92,7 @@
             <StackPanel>
               <TextBlock Text="Üretim Parametreleri" Style="{StaticResource SectionHeader}" Margin="0,0,0,12"/>
               <TextBlock Text="Toplam Araç" Style="{StaticResource FieldLabel}"/>
-              <TextBox x:Name="txtVehicleCount" Text="" Style="{StaticResource InputField}"
-                       Background="LightGray" Foreground="Black"
-                       controls:TextBoxPlaceholder.Placeholder="100"
-                       PreviewTextInput="IntegerOnly_Preview" Margin="0,0,0,12"/>
+              <TextBox x:Name="txtVehicleCount" Width="200" Height="30" Background="White" Foreground="Black" HorizontalAlignment="Left" Margin="0,0,0,12"/>
               <TextBlock Text="Günlük Araç" Style="{StaticResource FieldLabel}"/>
               <TextBox x:Name="txtVehiclesPerDay" Text="" Style="{StaticResource InputField}"
                        Background="LightGray" Foreground="Black"
