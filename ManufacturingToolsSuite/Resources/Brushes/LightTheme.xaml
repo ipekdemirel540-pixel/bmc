@@ -644,6 +644,9 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
+                    TextElement.Foreground="{TemplateBinding Foreground}"
+                    TextElement.FontFamily="{TemplateBinding FontFamily}"
+                    TextElement.FontSize="{TemplateBinding FontSize}"
                     CornerRadius="8"
                     MinHeight="36">
               <ScrollViewer x:Name="PART_ContentHost"
