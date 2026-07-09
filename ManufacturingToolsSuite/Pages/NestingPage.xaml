@@ -198,7 +198,7 @@
                                   BorderBrush="#FFFFFF"
                                   BorderThickness="0.5"
                                   CornerRadius="2"
-                                  ToolTip="{Binding Length, StringFormat={}{0:N0} mm}">
+                                  ToolTip="{Binding TooltipText}">
                             <TextBlock Text="{Binding Label}"
                                        Foreground="{Binding ForegroundBrush}"
                                        FontSize="9"

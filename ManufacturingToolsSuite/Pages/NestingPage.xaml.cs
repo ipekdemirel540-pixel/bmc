@@ -285,8 +285,41 @@ public partial class NestingPage : Page
         _detailedResultRows = plan.Profiles.Select(p =>
         {
             var segments = new List<NestingSegment>();
+            var scale = 180.0 / plan.Parameters.StandardLengthMm;
+
+            // 1. Left Clamp Margin (if > 0)
+            if (plan.Parameters.ClampPerEndMm > 0)
+            {
+                segments.Add(new NestingSegment
+                {
+                    Length = plan.Parameters.ClampPerEndMm,
+                    Label = "AYNA",
+                    ColorBrush = (Brush)converter.ConvertFromString("#475569")!, // Dark slate for laser chuck clamp
+                    ForegroundBrush = Brushes.White,
+                    Width = plan.Parameters.ClampPerEndMm * scale,
+                    IsClamp = true,
+                    TooltipText = $"Ayna Tutma Payı: {plan.Parameters.ClampPerEndMm} mm"
+                });
+            }
+
+            // 2. Cut Parts and Kerfs
             for (int i = 0; i < p.UsedLengthsMm.Count; i++)
             {
+                // Add Kerf between parts (before part i, if i > 0)
+                if (i > 0 && plan.Parameters.KerfMm > 0)
+                {
+                    segments.Add(new NestingSegment
+                    {
+                        Length = plan.Parameters.KerfMm,
+                        Label = "",
+                        ColorBrush = (Brush)converter.ConvertFromString("#EF4444")!, // Red for laser cut/kerf
+                        ForegroundBrush = Brushes.Transparent,
+                        Width = Math.Max(1.5, plan.Parameters.KerfMm * scale), // Min 1.5px to make it visible
+                        IsKerf = true,
+                        TooltipText = $"Kesim Kaybı (Kerf): {plan.Parameters.KerfMm} mm"
+                    });
+                }
+
                 var len = p.UsedLengthsMm[i];
                 var colorHex = colors[i % colors.Length];
                 segments.Add(new NestingSegment
@@ -295,20 +328,39 @@ public partial class NestingPage : Page
                     Label = len.ToString("F0"),
                     ColorBrush = (Brush)converter.ConvertFromString(colorHex)!,
                     ForegroundBrush = Brushes.White,
-                    Width = len * (180.0 / plan.Parameters.StandardLengthMm) // Map standard length to 180px width
+                    Width = len * scale,
+                    TooltipText = $"Parça Boyu: {len} mm"
                 });
             }
 
-            if (p.RemainingLengthMm > 0)
+            // 3. Usable Waste (Fire)
+            var usableWasteMm = p.RemainingLengthMm - (2 * plan.Parameters.ClampPerEndMm);
+            if (usableWasteMm > 0)
             {
                 segments.Add(new NestingSegment
                 {
-                    Length = p.RemainingLengthMm,
-                    Label = p.RemainingLengthMm.ToString("F0"),
+                    Length = usableWasteMm,
+                    Label = usableWasteMm.ToString("F0"),
                     ColorBrush = wasteBg,
                     ForegroundBrush = wasteFg,
-                    Width = p.RemainingLengthMm * (180.0 / plan.Parameters.StandardLengthMm),
-                    IsWaste = true
+                    Width = usableWasteMm * scale,
+                    IsWaste = true,
+                    TooltipText = $"Kullanılabilir Fire: {usableWasteMm} mm"
+                });
+            }
+
+            // 4. Right Clamp Margin (if > 0)
+            if (plan.Parameters.ClampPerEndMm > 0)
+            {
+                segments.Add(new NestingSegment
+                {
+                    Length = plan.Parameters.ClampPerEndMm,
+                    Label = "AYNA",
+                    ColorBrush = (Brush)converter.ConvertFromString("#475569")!, // Dark slate for laser chuck clamp
+                    ForegroundBrush = Brushes.White,
+                    Width = plan.Parameters.ClampPerEndMm * scale,
+                    IsClamp = true,
+                    TooltipText = $"Ayna Tutma Payı: {plan.Parameters.ClampPerEndMm} mm"
                 });
             }
 

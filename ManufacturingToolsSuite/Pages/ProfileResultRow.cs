@@ -24,5 +24,8 @@ namespace ManufacturingToolsSuite.Pages
         public Brush ForegroundBrush { get; set; } = Brushes.White;
         public double Width { get; set; }
         public bool IsWaste { get; set; }
+        public bool IsClamp { get; set; }
+        public bool IsKerf { get; set; }
+        public string TooltipText { get; set; } = string.Empty;
     }
 }
