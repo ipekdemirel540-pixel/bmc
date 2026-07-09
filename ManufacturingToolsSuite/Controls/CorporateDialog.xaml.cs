@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,10 +19,42 @@ public partial class CorporateDialog : Window
     {
         if (Owner == null) return;
 
-        Left = Owner.Left;
-        Top = Owner.Top;
-        Width = Owner.ActualWidth > 0 ? Owner.ActualWidth : Owner.Width;
-        Height = Owner.ActualHeight > 0 ? Owner.ActualHeight : Owner.Height;
+        try
+        {
+            if (Owner.IsVisible)
+            {
+                var screenPoint = Owner.PointToScreen(new Point(0, 0));
+                var presentationSource = PresentationSource.FromVisual(Owner);
+                if (presentationSource != null && presentationSource.CompositionTarget != null)
+                {
+                    var transform = presentationSource.CompositionTarget.TransformFromDevice;
+                    var logicalPoint = transform.Transform(screenPoint);
+                    Left = logicalPoint.X;
+                    Top = logicalPoint.Y;
+                }
+                else
+                {
+                    if (!double.IsNaN(Owner.Left)) Left = Owner.Left;
+                    if (!double.IsNaN(Owner.Top)) Top = Owner.Top;
+                }
+            }
+            else
+            {
+                if (!double.IsNaN(Owner.Left)) Left = Owner.Left;
+                if (!double.IsNaN(Owner.Top)) Top = Owner.Top;
+            }
+        }
+        catch
+        {
+            if (!double.IsNaN(Owner.Left)) Left = Owner.Left;
+            if (!double.IsNaN(Owner.Top)) Top = Owner.Top;
+        }
+
+        double ownerWidth = Owner.ActualWidth > 0 ? Owner.ActualWidth : Owner.Width;
+        double ownerHeight = Owner.ActualHeight > 0 ? Owner.ActualHeight : Owner.Height;
+
+        if (!double.IsNaN(ownerWidth) && ownerWidth > 0) Width = ownerWidth;
+        if (!double.IsNaN(ownerHeight) && ownerHeight > 0) Height = ownerHeight;
     }
 
     public void Configure(string message, string title, MessageBoxButton button, MessageBoxImage icon)
