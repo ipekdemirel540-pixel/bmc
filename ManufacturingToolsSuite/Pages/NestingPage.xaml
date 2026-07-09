@@ -96,8 +96,7 @@
               <TextBlock Text="Günlük Araç" Style="{StaticResource FieldLabel}"/>
               <TextBox x:Name="txtVehiclesPerDay" Text="" Style="{StaticResource InputField}"
                        Background="LightGray" Foreground="Black"
-                       controls:TextBoxPlaceholder.Placeholder="10"
-                       PreviewTextInput="IntegerOnly_Preview" Margin="0,0,0,12"/>
+                       controls:TextBoxPlaceholder.Placeholder="10" Margin="0,0,0,12"/>
               <TextBlock Text="Kerf (mm)" Style="{StaticResource FieldLabel}"/>
               <TextBox x:Name="txtKerf" Text="" Style="{StaticResource InputField}"
                        Background="LightGray" Foreground="Black"

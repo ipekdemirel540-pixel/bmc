@@ -603,51 +603,18 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="TextBox">
-          <Grid MinHeight="36">
-            <Border x:Name="bd"
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    TextElement.Foreground="{TemplateBinding Foreground}"
-                    TextElement.FontFamily="{TemplateBinding FontFamily}"
-                    TextElement.FontSize="{TemplateBinding FontSize}"
-                    CornerRadius="8"
-                    MinHeight="36">
-              <ScrollViewer x:Name="PART_ContentHost"
-                            Focusable="False"
-                            Margin="{TemplateBinding Padding}"
-                            HorizontalScrollBarVisibility="Hidden"
-                            VerticalScrollBarVisibility="Hidden"
-                            VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock x:Name="Placeholder"
-                       Text="{Binding Path=(controls:TextBoxPlaceholder.Placeholder), RelativeSource={RelativeSource TemplatedParent}}"
-                       Foreground="{DynamicResource SecondaryTextBrush}"
-                       FontFamily="{TemplateBinding FontFamily}"
-                       FontSize="{TemplateBinding FontSize}"
-                       Margin="{TemplateBinding Padding}"
-                       VerticalAlignment="Center"
-                       IsHitTestVisible="False"
-                       Visibility="Collapsed"/>
-          </Grid>
-          <ControlTemplate.Triggers>
-            <MultiTrigger>
-              <MultiTrigger.Conditions>
-                <Condition Property="Text" Value=""/>
-                <Condition Property="IsFocused" Value="False"/>
-              </MultiTrigger.Conditions>
-              <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
-            </MultiTrigger>
-            <DataTrigger Binding="{Binding Path=(controls:TextBoxPlaceholder.Placeholder), RelativeSource={RelativeSource TemplatedParent}}" Value="">
-              <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
-            </DataTrigger>
-            <Trigger Property="IsFocused" Value="True">
-              <Setter TargetName="bd" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-              <Setter TargetName="bd" Property="BorderBrush" Value="#52525B"/>
-            </Trigger>
-          </ControlTemplate.Triggers>
+          <Border x:Name="bd"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  Padding="{TemplateBinding Padding}"
+                  CornerRadius="8"
+                  MinHeight="36">
+            <ScrollViewer x:Name="PART_ContentHost"
+                          Focusable="False"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Hidden"/>
+          </Border>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
