@@ -7,6 +7,35 @@
       VerticalAlignment="Stretch"
       HorizontalAlignment="Stretch">
 
+  <Page.Resources>
+    <!-- Simple, clean, standard TextBox style with rounded corners and dynamic colors -->
+    <Style x:Key="NestingInputFieldStyle" TargetType="TextBox">
+      <Setter Property="Height" Value="32"/>
+      <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Padding" Value="8,4"/>
+      <Setter Property="FontSize" Value="13"/>
+      <Setter Property="FontFamily" Value="{StaticResource SecondaryFont}"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Style.Resources>
+        <!-- This rounds the corners of the native Microsoft TextBox Border -->
+        <Style TargetType="Border">
+          <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+      </Style.Resources>
+      <Style.Triggers>
+        <Trigger Property="IsFocused" Value="True">
+          <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+        </Trigger>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="BorderBrush" Value="#CBD5E1"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+  </Page.Resources>
+
   <Grid Style="{StaticResource PageShellCompact}"
         MinHeight="0"
         Margin="24,16,24,12"
@@ -92,25 +121,17 @@
             <StackPanel>
               <TextBlock Text="Üretim Parametreleri" Style="{StaticResource SectionHeader}" Margin="0,0,0,12"/>
               <TextBlock Text="Toplam Araç" Style="{StaticResource FieldLabel}"/>
-              <TextBox x:Name="txtVehicleCount" Width="200" Height="30" Background="White" Foreground="Black" HorizontalAlignment="Left" Margin="0,0,0,12"/>
+              <TextBox x:Name="txtVehicleCount" Text="100" Style="{StaticResource NestingInputFieldStyle}" Margin="0,0,0,12"/>
               <TextBlock Text="Günlük Araç" Style="{StaticResource FieldLabel}"/>
-              <TextBox x:Name="txtVehiclesPerDay" Text="" Style="{StaticResource InputField}"
-                       Background="LightGray" Foreground="Black"
-                       controls:TextBoxPlaceholder.Placeholder="10" Margin="0,0,0,12"/>
+              <TextBox x:Name="txtVehiclesPerDay" Text="10" Style="{StaticResource NestingInputFieldStyle}" Margin="0,0,0,12"/>
               <TextBlock Text="Kerf (mm)" Style="{StaticResource FieldLabel}"/>
-              <TextBox x:Name="txtKerf" Text="" Style="{StaticResource InputField}"
-                       Background="LightGray" Foreground="Black"
-                       controls:TextBoxPlaceholder.Placeholder="5"
+              <TextBox x:Name="txtKerf" Text="5" Style="{StaticResource NestingInputFieldStyle}"
                        PreviewTextInput="IntegerOnly_Preview" Margin="0,0,0,12"/>
-              <TextBlock Text="Kelepçe (mm/uç)" Style="{StaticResource ResourceKey=FieldLabel}"/>
-              <TextBox x:Name="txtClamp" Text="" Style="{StaticResource InputField}"
-                       Background="LightGray" Foreground="Black"
-                       controls:TextBoxPlaceholder.Placeholder="100"
+              <TextBlock Text="Kelepçe (mm/uç)" Style="{StaticResource FieldLabel}"/>
+              <TextBox x:Name="txtClamp" Text="100" Style="{StaticResource NestingInputFieldStyle}"
                        PreviewTextInput="IntegerOnly_Preview" Margin="0,0,0,12"/>
               <TextBlock Text="Standart Profil Boyu (mm)" Style="{StaticResource FieldLabel}"/>
-              <TextBox x:Name="txtStandardLength" Text="" Style="{StaticResource InputField}"
-                       Background="LightGray" Foreground="Black"
-                       controls:TextBoxPlaceholder.Placeholder="6000"
+              <TextBox x:Name="txtStandardLength" Text="6000" Style="{StaticResource NestingInputFieldStyle}"
                        PreviewTextInput="IntegerOnly_Preview"/>
             </StackPanel>
           </Border>
@@ -119,9 +140,7 @@
             <StackPanel>
               <TextBlock Text="Üretim Sekansı" Style="{StaticResource SectionHeader}" Margin="0,0,0,4"/>
               <TextBlock Text="Opsiyonel · Örn: 10-10-5-5" Style="{StaticResource CaptionText}" Margin="0,0,0,8"/>
-              <TextBox x:Name="txtCustomSequence" Text="" Style="{StaticResource InputField}"
-                       Background="LightGray" Foreground="Black"
-                       controls:TextBoxPlaceholder.Placeholder="10-10-5-5"/>
+              <TextBox x:Name="txtCustomSequence" Text="" Style="{StaticResource NestingInputFieldStyle}"/>
             </StackPanel>
           </Border>
         </StackPanel>
