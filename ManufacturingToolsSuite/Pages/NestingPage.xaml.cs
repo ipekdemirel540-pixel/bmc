@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using ManufacturingToolsSuite.Models.Nesting;
 using ManufacturingToolsSuite.Services;
 using ManufacturingToolsSuite.Services.Nesting;
@@ -265,15 +266,62 @@ public partial class NestingPage : Page
     private void ApplyPlan(NestingPlan plan)
     {
         _currentPlan = plan;
-        _allResultRows = plan.Profiles.Select(p => new ProfileResultRow
+
+        var colors = new[]
         {
-            ProfileIndex = p.ProfileIndex,
-            Dimensions = p.Dimensions,
-            Components = string.Join(" | ", p.ComponentNumbers),
-            CutLengths = string.Join("; ", p.UsedLengthsMm.Select(l => l.ToString("F0"))),
-            UsedMm = p.UsedLengthTotalMm,
-            WasteMm = p.RemainingLengthMm,
-            UtilizationPercent = p.UtilizationPercent
+            "#3B82F6", // Royal Blue
+            "#10B981", // Emerald Green
+            "#F59E0B", // Amber Gold
+            "#8B5CF6", // Purple
+            "#EC4899", // Pink
+            "#06B6D4", // Cyan
+            "#F97316"  // Orange
+        };
+        var converter = new BrushConverter();
+        var wasteBg = (Brush)converter.ConvertFromString("#F1F5F9")!;
+        var wasteFg = (Brush)converter.ConvertFromString("#64748B")!;
+
+        _allResultRows = plan.Profiles.Select(p =>
+        {
+            var segments = new List<NestingSegment>();
+            for (int i = 0; i < p.UsedLengthsMm.Count; i++)
+            {
+                var len = p.UsedLengthsMm[i];
+                var colorHex = colors[i % colors.Length];
+                segments.Add(new NestingSegment
+                {
+                    Length = len,
+                    Label = len.ToString("F0"),
+                    ColorBrush = (Brush)converter.ConvertFromString(colorHex)!,
+                    ForegroundBrush = Brushes.White,
+                    Width = len * (180.0 / plan.Parameters.StandardLengthMm) // Map standard length to 180px width
+                });
+            }
+
+            if (p.RemainingLengthMm > 0)
+            {
+                segments.Add(new NestingSegment
+                {
+                    Length = p.RemainingLengthMm,
+                    Label = p.RemainingLengthMm.ToString("F0"),
+                    ColorBrush = wasteBg,
+                    ForegroundBrush = wasteFg,
+                    Width = p.RemainingLengthMm * (180.0 / plan.Parameters.StandardLengthMm),
+                    IsWaste = true
+                });
+            }
+
+            return new ProfileResultRow
+            {
+                ProfileIndex = p.ProfileIndex,
+                Dimensions = p.Dimensions,
+                Components = string.Join(" | ", p.ComponentNumbers),
+                CutLengths = string.Join("; ", p.UsedLengthsMm.Select(l => l.ToString("F0"))),
+                UsedMm = p.UsedLengthTotalMm,
+                WasteMm = p.RemainingLengthMm,
+                UtilizationPercent = p.UtilizationPercent,
+                Segments = segments
+            };
         }).ToList();
 
         txtMetricProfiles.Text = plan.TotalProfileCount.ToString();
