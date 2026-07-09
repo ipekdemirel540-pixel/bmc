@@ -18,7 +18,8 @@ public partial class NestingPage : Page
     private string _excelPath = string.Empty;
     private IReadOnlyList<NestingRow> _sourceRows = Array.Empty<NestingRow>();
     private NestingPlan? _currentPlan;
-    private List<ProfileResultRow> _allResultRows = [];
+    private List<ProfileResultRow> _detailedResultRows = [];
+    private List<ProfileResultRow> _mergedResultRows = [];
     private CancellationTokenSource? _cts;
     private Settings _settings = new();
 
@@ -281,7 +282,7 @@ public partial class NestingPage : Page
         var wasteBg = (Brush)converter.ConvertFromString("#F1F5F9")!;
         var wasteFg = (Brush)converter.ConvertFromString("#64748B")!;
 
-        _allResultRows = plan.Profiles.Select(p =>
+        _detailedResultRows = plan.Profiles.Select(p =>
         {
             var segments = new List<NestingSegment>();
             for (int i = 0; i < p.UsedLengthsMm.Count; i++)
@@ -320,9 +321,30 @@ public partial class NestingPage : Page
                 UsedMm = p.UsedLengthTotalMm,
                 WasteMm = p.RemainingLengthMm,
                 UtilizationPercent = p.UtilizationPercent,
-                Segments = segments
+                Segments = segments,
+                Quantity = 1
             };
         }).ToList();
+
+        // Calculate merged/grouped rows
+        _mergedResultRows = _detailedResultRows
+            .GroupBy(r => new { r.Dimensions, r.CutLengths })
+            .Select((g, idx) =>
+            {
+                var first = g.First();
+                return new ProfileResultRow
+                {
+                    ProfileIndex = idx + 1,
+                    Dimensions = g.Key.Dimensions,
+                    Components = string.Join(" | ", g.SelectMany(r => r.Components.Split(new[] { " | " }, StringSplitOptions.RemoveEmptyEntries)).Distinct()),
+                    CutLengths = g.Key.CutLengths,
+                    UsedMm = first.UsedMm,
+                    WasteMm = first.WasteMm,
+                    UtilizationPercent = first.UtilizationPercent,
+                    Segments = first.Segments,
+                    Quantity = g.Count()
+                };
+            }).ToList();
 
         txtMetricProfiles.Text = plan.TotalProfileCount.ToString();
         txtMetricStandard.Text = $"{plan.Parameters.StandardLengthMm} mm";
@@ -339,11 +361,22 @@ public partial class NestingPage : Page
 
     private void ApplyDimensionFilter()
     {
-        if (_allResultRows.Count == 0) return;
+        var sourceList = (chkMergeIdentical?.IsChecked == true) ? _mergedResultRows : _detailedResultRows;
+        if (sourceList.Count == 0) return;
+
         var filter = cmbDimensionFilter.SelectedItem as string;
         dgResults.ItemsSource = filter is null or "T\u00FCm\u00FC"
-            ? _allResultRows
-            : _allResultRows.Where(r => r.Dimensions == filter).ToList();
+            ? sourceList
+            : sourceList.Where(r => r.Dimensions == filter).ToList();
+    }
+
+    private void ChkMergeIdentical_Click(object sender, RoutedEventArgs e)
+    {
+        if (colQuantity != null)
+        {
+            colQuantity.Visibility = (chkMergeIdentical.IsChecked == true) ? Visibility.Visible : Visibility.Collapsed;
+        }
+        ApplyDimensionFilter();
     }
 
     private void UpdateSummaryPreview(NestingPlan? plan = null)

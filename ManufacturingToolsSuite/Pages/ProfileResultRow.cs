@@ -12,6 +12,7 @@ namespace ManufacturingToolsSuite.Pages
         public double UsedMm { get; init; }
         public double WasteMm { get; init; }
         public double UtilizationPercent { get; init; }
+        public int Quantity { get; set; } = 1;
         public List<NestingSegment> Segments { get; set; } = new List<NestingSegment>();
     }
 

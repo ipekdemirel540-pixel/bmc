@@ -158,10 +158,15 @@
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="Auto"/>
               </Grid.ColumnDefinitions>
               <TextBlock Grid.Column="0" Text="Kesim Planı" Style="{StaticResource SectionHeader}"
-                         FontSize="14" VerticalAlignment="Center"/>
-              <ComboBox Grid.Column="1" x:Name="cmbDimensionFilter"
+                          FontSize="14" VerticalAlignment="Center"/>
+              <CheckBox Grid.Column="1" x:Name="chkMergeIdentical" Content="Benzer Kesimleri Birleştir"
+                        Foreground="{DynamicResource TextBrush}" FontWeight="SemiBold" FontSize="11"
+                        VerticalAlignment="Center" Click="ChkMergeIdentical_Click" Cursor="Hand"/>
+              <ComboBox Grid.Column="3" x:Name="cmbDimensionFilter"
                         Style="{StaticResource CorporateHeaderComboBox}" Width="180"
                         SelectionChanged="DimensionFilter_Changed"/>
             </Grid>
@@ -173,6 +178,7 @@
                     RowStyle="{StaticResource CorporateDataGridRow}">
             <DataGrid.Columns>
               <DataGridTextColumn Header="#" Binding="{Binding ProfileIndex}" Width="60"/>
+              <DataGridTextColumn x:Name="colQuantity" Header="Adet" Binding="{Binding Quantity}" Width="55" Visibility="Collapsed"/>
               <DataGridTextColumn Header="Ölçü" Binding="{Binding Dimensions}" Width="90"/>
               <DataGridTextColumn Header="Bileşenler" Binding="{Binding Components}" Width="*"/>
               <DataGridTemplateColumn Header="Görsel Kesim" Width="200">
