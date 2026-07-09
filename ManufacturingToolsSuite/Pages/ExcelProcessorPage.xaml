@@ -117,16 +117,21 @@
 
               <!-- Search Strip -->
               <Grid Grid.Row="1" Margin="0,0,0,12">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*"/>
-                  <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" x:Name="txtSearch" Style="{StaticResource SearchInputFieldStyle}"
-                         Tag="Parça no, tanım veya kesit ara..." TextChanged="TxtSearch_TextChanged"
-                         VerticalAlignment="Center"/>
-                <TextBlock Grid.Column="0" IsHitTestVisible="False" Text="Parça no, tanım veya kesit ara..."
-                           Foreground="{DynamicResource SecondaryTextBrush}" VerticalAlignment="Center" Margin="10,0,0,0"
-                           Visibility="{Binding ElementName=txtSearch, Path=Text.IsEmpty, Converter={StaticResource Bool2Vis}}"/>
+                <TextBox x:Name="txtSearch" Style="{StaticResource SearchInputFieldStyle}"
+                         TextChanged="TxtSearch_TextChanged" VerticalAlignment="Center"/>
+                <TextBlock IsHitTestVisible="False" Text="Parça no, tanım veya kesit ara..."
+                           Foreground="{DynamicResource SecondaryTextBrush}" VerticalAlignment="Center" Margin="10,0,0,0">
+                  <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                      <Setter Property="Visibility" Value="Collapsed"/>
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=txtSearch}" Value="">
+                          <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </TextBlock.Style>
+                </TextBlock>
               </Grid>
 
               <!-- DataGrid -->
