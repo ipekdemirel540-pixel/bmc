@@ -172,7 +172,7 @@
                     CellStyle="{StaticResource CorporateDataGridCell}"
                     RowStyle="{StaticResource CorporateDataGridRow}">
             <DataGrid.Columns>
-              <DataGridTextColumn Header="#" Binding="{Binding ProfileIndex}" Width="44"/>
+              <DataGridTextColumn Header="#" Binding="{Binding ProfileIndex}" Width="60"/>
               <DataGridTextColumn Header="Ölçü" Binding="{Binding Dimensions}" Width="90"/>
               <DataGridTextColumn Header="Bileşenler" Binding="{Binding Components}" Width="*"/>
               <DataGridTextColumn Header="Kesimler" Binding="{Binding CutLengths}" Width="120"/>
