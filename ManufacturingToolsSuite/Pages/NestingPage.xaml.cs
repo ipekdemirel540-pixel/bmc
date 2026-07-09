@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -27,6 +27,18 @@ public partial class NestingPage : Page
         ApplyDefaults();
         LoadPersistedSettings();
         ShowEmptyState(true);
+    }
+
+    public NestingPage(string initialExcelPath) : this()
+    {
+        if (File.Exists(initialExcelPath))
+        {
+            _excelPath = initialExcelPath;
+            _settings.LastNestingExcelPath = _excelPath;
+            UserSettingsService.Save(_settings);
+            txtFileName.Text = Path.GetFileName(_excelPath);
+            LoadExcel(_excelPath, silent: true);
+        }
     }
 
     private void ApplyDefaults()
