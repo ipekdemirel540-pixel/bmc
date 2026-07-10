@@ -268,114 +268,16 @@ public partial class NestingPage : Page
     {
         _currentPlan = plan;
 
-        var colors = new[]
+        _detailedResultRows = plan.Profiles.Select(p => new ProfileResultRow
         {
-            "#3B82F6", // Royal Blue
-            "#10B981", // Emerald Green
-            "#F59E0B", // Amber Gold
-            "#8B5CF6", // Purple
-            "#EC4899", // Pink
-            "#06B6D4", // Cyan
-            "#F97316"  // Orange
-        };
-        var converter = new BrushConverter();
-        var wasteBg = (Brush)converter.ConvertFromString("#F1F5F9")!;
-        var wasteFg = (Brush)converter.ConvertFromString("#64748B")!;
-
-        _detailedResultRows = plan.Profiles.Select(p =>
-        {
-            var segments = new List<NestingSegment>();
-            var scale = 180.0 / plan.Parameters.StandardLengthMm;
-
-            // 1. Left Clamp Margin (if > 0)
-            if (plan.Parameters.ClampPerEndMm > 0)
-            {
-                segments.Add(new NestingSegment
-                {
-                    Length = plan.Parameters.ClampPerEndMm,
-                    Label = "AYNA",
-                    ColorBrush = (Brush)converter.ConvertFromString("#475569")!, // Dark slate for laser chuck clamp
-                    ForegroundBrush = Brushes.White,
-                    Width = plan.Parameters.ClampPerEndMm * scale,
-                    IsClamp = true,
-                    TooltipText = $"Ayna Tutma Payı: {plan.Parameters.ClampPerEndMm} mm"
-                });
-            }
-
-            // 2. Cut Parts and Kerfs
-            for (int i = 0; i < p.UsedLengthsMm.Count; i++)
-            {
-                // Add Kerf between parts (before part i, if i > 0)
-                if (i > 0 && plan.Parameters.KerfMm > 0)
-                {
-                    segments.Add(new NestingSegment
-                    {
-                        Length = plan.Parameters.KerfMm,
-                        Label = "",
-                        ColorBrush = (Brush)converter.ConvertFromString("#EF4444")!, // Red for laser cut/kerf
-                        ForegroundBrush = Brushes.Transparent,
-                        Width = Math.Max(1.5, plan.Parameters.KerfMm * scale), // Min 1.5px to make it visible
-                        IsKerf = true,
-                        TooltipText = $"Kesim Kaybı (Kerf): {plan.Parameters.KerfMm} mm"
-                    });
-                }
-
-                var len = p.UsedLengthsMm[i];
-                var colorHex = colors[i % colors.Length];
-                segments.Add(new NestingSegment
-                {
-                    Length = len,
-                    Label = len.ToString("F0"),
-                    ColorBrush = (Brush)converter.ConvertFromString(colorHex)!,
-                    ForegroundBrush = Brushes.White,
-                    Width = len * scale,
-                    TooltipText = $"Parça Boyu: {len} mm"
-                });
-            }
-
-            // 3. Usable Waste (Fire)
-            var usableWasteMm = p.RemainingLengthMm - (2 * plan.Parameters.ClampPerEndMm);
-            if (usableWasteMm > 0)
-            {
-                segments.Add(new NestingSegment
-                {
-                    Length = usableWasteMm,
-                    Label = usableWasteMm.ToString("F0"),
-                    ColorBrush = wasteBg,
-                    ForegroundBrush = wasteFg,
-                    Width = usableWasteMm * scale,
-                    IsWaste = true,
-                    TooltipText = $"Kullanılabilir Fire: {usableWasteMm} mm"
-                });
-            }
-
-            // 4. Right Clamp Margin (if > 0)
-            if (plan.Parameters.ClampPerEndMm > 0)
-            {
-                segments.Add(new NestingSegment
-                {
-                    Length = plan.Parameters.ClampPerEndMm,
-                    Label = "AYNA",
-                    ColorBrush = (Brush)converter.ConvertFromString("#475569")!, // Dark slate for laser chuck clamp
-                    ForegroundBrush = Brushes.White,
-                    Width = plan.Parameters.ClampPerEndMm * scale,
-                    IsClamp = true,
-                    TooltipText = $"Ayna Tutma Payı: {plan.Parameters.ClampPerEndMm} mm"
-                });
-            }
-
-            return new ProfileResultRow
-            {
-                ProfileIndex = p.ProfileIndex,
-                Dimensions = p.Dimensions,
-                Components = string.Join(" | ", p.ComponentNumbers),
-                CutLengths = string.Join("; ", p.UsedLengthsMm.Select(l => l.ToString("F0"))),
-                UsedMm = p.UsedLengthTotalMm,
-                WasteMm = p.RemainingLengthMm,
-                UtilizationPercent = p.UtilizationPercent,
-                Segments = segments,
-                Quantity = 1
-            };
+            ProfileIndex = p.ProfileIndex,
+            Dimensions = p.Dimensions,
+            Components = string.Join(" | ", p.ComponentNumbers),
+            CutLengths = string.Join("; ", p.UsedLengthsMm.Select(l => l.ToString("F0"))),
+            UsedMm = p.UsedLengthTotalMm,
+            WasteMm = p.RemainingLengthMm,
+            UtilizationPercent = p.UtilizationPercent,
+            Quantity = 1
         }).ToList();
 
         // Calculate merged/grouped rows
@@ -393,7 +295,6 @@ public partial class NestingPage : Page
                     UsedMm = first.UsedMm,
                     WasteMm = first.WasteMm,
                     UtilizationPercent = first.UtilizationPercent,
-                    Segments = first.Segments,
                     Quantity = g.Count()
                 };
             }).ToList();
@@ -403,7 +304,7 @@ public partial class NestingPage : Page
         txtMetricWaste.Text = $"{plan.TotalWasteMm:N0} mm";
         txtMetricUtil.Text = $"{plan.OverallUtilizationPercent:0.#}%";
 
-        cmbDimensionFilter.ItemsSource = new[] { "T\u00FCm\u00FC" }.Concat(plan.Profiles.Select(p => p.Dimensions).Distinct()).ToList();
+        cmbDimensionFilter.ItemsSource = new[] { "Tümü" }.Concat(plan.Profiles.Select(p => p.Dimensions).Distinct()).ToList();
         cmbDimensionFilter.SelectedIndex = 0;
 
         ShowEmptyState(false);
