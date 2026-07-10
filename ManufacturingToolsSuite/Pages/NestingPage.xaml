@@ -175,9 +175,13 @@
                     Style="{StaticResource CorporateDataGrid}"
                     ColumnHeaderStyle="{StaticResource CorporateDataGridColumnHeader}"
                     CellStyle="{StaticResource CorporateDataGridCell}"
-                    RowStyle="{StaticResource CorporateDataGridRow}"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    RowStyle="{StaticResource CorporateDataGridRow}">
+            <DataGrid.Resources>
+              <Style TargetType="ScrollViewer">
+                <Setter Property="HorizontalScrollBarVisibility" Value="Visible"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+              </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
               <DataGridTextColumn Header="#" Binding="{Binding ProfileIndex}" Width="60"/>
               <DataGridTextColumn x:Name="colQuantity" Header="Adet" Binding="{Binding Quantity}" Width="55" Visibility="Collapsed"/>

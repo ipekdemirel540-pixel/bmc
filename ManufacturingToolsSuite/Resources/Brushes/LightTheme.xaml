@@ -923,6 +923,12 @@
     <Setter Property="FontSize" Value="12"/>
     <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource BorderBrush}"/>
     <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
+    <Style.Resources>
+      <Style TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+      </Style>
+    </Style.Resources>
   </Style>
 
   <Style TargetType="DataGridColumnHeader" x:Key="CorporateDataGridColumnHeader">
