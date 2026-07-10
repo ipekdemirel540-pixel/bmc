@@ -183,7 +183,7 @@
               <DataGridTextColumn x:Name="colQuantity" Header="Adet" Binding="{Binding Quantity}" Width="55" Visibility="Collapsed"/>
               <DataGridTextColumn Header="Ölçü" Binding="{Binding Dimensions}" Width="90"/>
               <DataGridTextColumn Header="Bileşenler" Binding="{Binding Components}" Width="Auto" MinWidth="200"/>
-              <DataGridTextColumn Header="Kesimler" Binding="{Binding CutLengths}" Width="120"/>
+              <DataGridTextColumn Header="Kesimler" Binding="{Binding CutLengths}" Width="Auto" MinWidth="120"/>
               <DataGridTextColumn Header="Kullanım" Binding="{Binding UsedMm, StringFormat={}{0:N0}}" Width="72"/>
               <DataGridTextColumn Header="Fire" Binding="{Binding WasteMm, StringFormat={}{0:N0}}" Width="64"/>
               <DataGridTextColumn Header="%" Binding="{Binding UtilizationPercent, StringFormat={}{0:0.#}}" Width="65"/>
